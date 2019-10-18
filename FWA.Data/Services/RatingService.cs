@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FWA.Data.Services
 {
-    class RatingService
+    public class RatingService
     {
         private readonly IRatingRepository _ratingRepository;
 
@@ -32,10 +32,13 @@ namespace FWA.Data.Services
         {
             var ratings = _ratingRepository.RatingsForMovie(movieId);
             var rating = ratings.Average(x => x.Value);
-            return Math.Round(rating, MidpointRounding.ToPositiveInfinity);
+            return Round(rating);
         }
 
-
+        public decimal Round(decimal input)
+        {
+            return Math.Round(input, MidpointRounding.AwayFromZero);
+        }
 
 
     }

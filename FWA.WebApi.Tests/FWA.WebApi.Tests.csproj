@@ -13,4 +13,9 @@
     <PackageReference Include="coverlet.collector" Version="1.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FWA.Data\FWA.Data.csproj" />
+    <ProjectReference Include="..\FWA\FWA.WebApi.csproj" />
+  </ItemGroup>
+
 </Project>
