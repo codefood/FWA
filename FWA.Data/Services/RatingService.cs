@@ -1,16 +1,42 @@
-﻿using System;
+﻿using FWA.Data.Models;
+using FWA.Data.Repositories;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FWA.Data.Services
 {
     class RatingService
     {
+        private readonly IRatingRepository _ratingRepository;
 
-        public decimal GetAverageRating()
+        public RatingService(IRatingRepository ratingRepository)
         {
-
+            _ratingRepository = ratingRepository;
         }
+
+        public decimal GetAverageRating(Movie movie)
+        {
+            return GetAverageRating(movie.Id);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="movieId"></param>
+        /// <returns></returns>
+        /// <remarks>Consider implementing a caching layer here</remarks>
+        public decimal GetAverageRating(Guid movieId)
+        {
+            var ratings = _ratingRepository.RatingsForMovie(movieId);
+            var rating = ratings.Average(x => x.Value);
+            return Math.Round(rating, MidpointRounding.ToPositiveInfinity);
+        }
+
+
+
 
     }
 }
