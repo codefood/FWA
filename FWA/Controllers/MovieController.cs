@@ -23,10 +23,21 @@ namespace FWA.WebApi.Controllers
         }
 
         [HttpGet]
+        [Route("setup")]
         public async Task<IActionResult> Setup()
         {
             await this.movieService.Setup();
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("{*title}")]
+        public async Task<IActionResult> Search(string title)
+        {
+            return await Search(new SearchModel()
+            {
+                Title = title
+            });
         }
 
         [HttpPost]

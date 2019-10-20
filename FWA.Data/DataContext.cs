@@ -25,11 +25,13 @@ namespace FWA.Data
         private void SeedUsers()
         {
             var rand = new Random();
-            for(var i = 0; i < rand.Next(10, 20); i++)
+            var users = new List<string> { "Fred Jones", "Daphne Blake", "Norville Roberts", "Velma Dinkley" };
+            foreach(var user in users)
             {
                 Users.Add(new User()
                 {
-                    Id = Guid.NewGuid()
+                    Id = Guid.NewGuid(),
+                    Name = user
                 });
             }
         }

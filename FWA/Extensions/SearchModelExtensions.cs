@@ -13,11 +13,15 @@ namespace FWA.WebApi.Extensions
         {
             return 
                 model != null &&
-                model.Genre != null && 
-                model.Title != null && 
-                model.YearOfRelease != null && 
-                model.Genres != null && 
-                model.Genres.Any();
+                (
+                    model.Genre != null ||
+                    model.Title != null ||
+                    model.YearOfRelease != null ||
+                    (
+                        model.Genres != null && 
+                        model.Genres.Any()
+                    )
+                );
         }
     }
 }
