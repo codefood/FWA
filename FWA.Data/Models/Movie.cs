@@ -11,11 +11,11 @@ namespace FWA.Data.Models
         public Guid Id { get; set; }
 
         [Required]
-        public string Title { get; set; }
+        public string Title { get; set; } = "";
         public DateTime Released { get; set; }
         public int RunningTime { get; set; }
 
-        public virtual IList<string> Genres { get; set; }
+        public virtual IList<Genre> Genres { get; set; } = new List<Genre>();
         
     }
 }

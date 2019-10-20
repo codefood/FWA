@@ -9,9 +9,11 @@ namespace FWA.Data.Models
     {
         [Key]
         public Guid Id { get; set; }
+        
+        [Required]
         public Guid MovieId { get; set; }
 
-        public virtual User RatedBy { get; set; }
+        public virtual User? RatedBy { get; set; }
         public decimal Value { get; set; }
 
         //TODO: 

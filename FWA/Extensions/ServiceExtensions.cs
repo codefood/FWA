@@ -14,7 +14,7 @@ namespace FWA.WebApi.Extensions
     {
         public static void AddFwa(this IServiceCollection services)
         {
-            services.AddDbContext<DataContext>();
+            
             services.AddScoped<IRatingRepository, RatingRepository>();
             services.AddScoped<IMovieRepository, MovieRepository>();
             services.AddScoped<MovieService>();

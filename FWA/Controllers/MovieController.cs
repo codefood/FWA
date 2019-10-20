@@ -45,7 +45,7 @@ namespace FWA.WebApi.Controllers
 
             if (!result.Any()) return NotFound();
 
-            return base.Ok(result);
+            return Ok(result);
         }
 
     }

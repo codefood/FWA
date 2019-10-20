@@ -8,9 +8,9 @@ namespace FWA.Data.Search
 {
     public class SearchBuilder
     {
-        private string Title { get; set; }
-        private DateTime SinceDate { get; set; }
-        private List<string> Genres { get; set; }
+        private string? Title { get; set; } 
+        private DateTime? SinceDate { get; set; }
+        private List<string>? Genres { get; set; }
 
         public SearchBuilder WithPartialTitle(string title)
         {
@@ -36,7 +36,7 @@ namespace FWA.Data.Search
             if (SinceDate != null)
                 yield return (x => x.Released >= SinceDate);
             if (Genres != null && Genres.Any())
-                yield return (x => x.Genres?.Any(y => Genres.Contains(y)) ?? false);
+                yield return (x => x.Genres?.Any(y => Genres.Contains(y.Name)) ?? false);
         }
 
     }

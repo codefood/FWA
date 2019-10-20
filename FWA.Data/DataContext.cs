@@ -8,28 +8,17 @@ using System.Threading.Tasks;
 
 namespace FWA.Data
 {
-    /// <summary>
-    /// TODO: Implement Data storage
-    /// </summary>
-    /// * Investigate Entity Framework, Dapper, other ORMs
-    /// * Might be worth looking into NoSQL databases, MongoDB could store this data beautifully!
-    /// * Select the best for the data that needs to be stored
     public class DataContext : DbContext
     {
-
-        public DataContext()
-        {
-            
-
-        }
+        public DataContext(DbContextOptions<DataContext> opts) : base(opts) { }
 
         public async Task Setup()
         {
             //DEMO: Add a random collection of movies
             //These methods need to be run in order
-            SeedUsers();
-            SeedMovies();
-            SeedRatings();
+            if(!Users.Any()) SeedUsers();
+            if(!Movies.Any()) SeedMovies();
+            if(!Ratings.Any()) SeedRatings();
             await SaveChangesAsync();
         }
 
