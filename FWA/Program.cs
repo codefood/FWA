@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FWA.Data;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -39,6 +40,10 @@ namespace FWA
                 {
                     var context = services.GetRequiredService<DataContext>();
                     context.Database.EnsureCreated();
+                    
+                    if(!context.Database.GetPendingMigrations().Any())
+                        context.Database.Migrate();
+
                 }
                 catch (Exception ex)
                 {
