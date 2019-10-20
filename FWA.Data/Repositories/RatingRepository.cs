@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FWA.Data.Models;
+using FWA.Data.Repositories.Interfaces;
 
 namespace FWA.Data.Repositories
 {

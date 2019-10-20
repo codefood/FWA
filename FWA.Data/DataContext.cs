@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace FWA.Data
@@ -67,7 +68,7 @@ namespace FWA.Data
                     {
                         Id = Guid.NewGuid(),
                         MovieId = movie.Id,
-                        RatedBy = Users[rand.Next(0, Users.Count)],
+                        RatedBy = Users[rand.Next(0, Users.Count())],
                         Value = rand.Next(0, 5)
                     });
                 }
