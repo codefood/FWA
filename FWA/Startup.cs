@@ -2,10 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FWA.Data;
-using FWA.Data.Repositories;
-using FWA.Data.Repositories.Interfaces;
-using FWA.Data.Services;
+using FWA.WebApi.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,11 +27,7 @@ namespace FWA
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddDbContext<DataContext>();
-            services.AddScoped<IRatingRepository, RatingRepository>();
-            services.AddScoped<IMovieRepository, MovieRepository>();
-            services.AddScoped<MovieService>();
-            services.AddScoped<RatingService>();
+            services.AddFwa();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

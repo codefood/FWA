@@ -60,6 +60,8 @@ namespace FWA.Data
         private void SeedRatings()
         {
             var rand = new Random();
+            var users = Users.ToArray();
+
             foreach (var movie in Movies)
             {
                 for (var i = 0; i < rand.Next(1, 20); i++)
@@ -68,7 +70,7 @@ namespace FWA.Data
                     {
                         Id = Guid.NewGuid(),
                         MovieId = movie.Id,
-                        RatedBy = Users[rand.Next(0, Users.Count())],
+                        RatedBy = users[rand.Next(0, users.Count())],
                         Value = rand.Next(0, 5)
                     });
                 }

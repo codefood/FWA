@@ -19,7 +19,7 @@ namespace FWA.Data.Repositories
 
         public IEnumerable<Rating> RatingsByUser(Guid userId)
         {
-            return _context.Ratings.Where(x => x.RatedBy == userId);
+            return _context.Ratings.Where(x => x.RatedBy != null && x.RatedBy.Id == userId);
         }
 
         public IEnumerable<Rating> RatingsForMovie(Guid movieId)
