@@ -1,4 +1,5 @@
 ﻿using FWA.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +12,7 @@ namespace FWA.Data
     /// * Investigate Entity Framework, Dapper, other ORMs
     /// * Might be worth looking into NoSQL databases, MongoDB could store this data beautifully!
     /// * Select the best for the data that needs to be stored
-    public class DataContext
+    public class DataContext : DataContext
     {
 
         public DataContext()
@@ -27,7 +28,6 @@ namespace FWA.Data
         private void SeedUsers()
         {
             var rand = new Random();
-            Users = new List<Guid>();
             for(var i = 0; i < rand.Next(10, 20); i++)
             {
                 Users.Add(Guid.NewGuid());
@@ -38,7 +38,6 @@ namespace FWA.Data
         {
             var demoMovieNames = new List<string> { "The Godfather", "The Shawshank Redemption", "The Godfather: Part II", "Inception", "Fight Club", "The Dark Knight", "12 Angry Men" };
             var rand = new Random();
-            Movies = new List<Movie>();
 
             foreach (var demoMovie in demoMovieNames)
             {
@@ -70,11 +69,11 @@ namespace FWA.Data
             }
         }
 
-        public IList<Movie> Movies { get; set; }
+        public DbSet<Movie> Movies { get; set; }
 
-        public IList<Rating> Ratings { get; set; }
+        public DbSet<Rating> Ratings { get; set; }
 
-        public IList<Guid> Users { get; set; }
+        public DbSet<User> Users { get; set; }
 
     }
 }
