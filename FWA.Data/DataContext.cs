@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FWA.Data
 {
@@ -18,12 +19,18 @@ namespace FWA.Data
 
         public DataContext()
         {
+            
+
+        }
+
+        public async Task Setup()
+        {
             //DEMO: Add a random collection of movies
             //These methods need to be run in order
             SeedUsers();
             SeedMovies();
             SeedRatings();
-
+            await SaveChangesAsync();
         }
 
         private void SeedUsers()

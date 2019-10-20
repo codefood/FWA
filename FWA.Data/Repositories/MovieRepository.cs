@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FWA.Data.Repositories
 {
@@ -14,6 +15,11 @@ namespace FWA.Data.Repositories
         public MovieRepository(DataContext context)
         {
             this.context = context;
+        }
+
+        public async Task Setup()
+        {
+            await context.Setup();
         }
 
         public IList<Movie> Search(IEnumerable<Func<Movie, bool>> filters)

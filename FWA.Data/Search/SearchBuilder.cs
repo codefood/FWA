@@ -8,9 +8,9 @@ namespace FWA.Data.Search
 {
     public class SearchBuilder
     {
-        public string Title { get; private set; }
-        public DateTime SinceDate { get; private set; }
-        public List<string> Genres { get; private set; }
+        private string Title { get; set; }
+        private DateTime SinceDate { get; set; }
+        private List<string> Genres { get; set; }
 
         public SearchBuilder WithPartialTitle(string title)
         {

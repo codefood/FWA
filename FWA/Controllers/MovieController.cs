@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FWA.Data.Search;
+using FWA.Data.Services;
 using FWA.WebApi.Extensions;
 using FWA.WebApi.Models;
 using Microsoft.AspNetCore.Http;
@@ -13,12 +15,37 @@ namespace FWA.WebApi.Controllers
     [ApiController]
     public class MovieController : ControllerBase
     {
+        private readonly MovieService movieService;
+
+        public MovieController(MovieService movieService)
+        {
+            this.movieService = movieService;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Setup()
+        {
+            await this.movieService.Setup();
+            return Ok();
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Search(SearchModel model)
         {
             if (!model.Valid())
                 return BadRequest();
 
-            return null;
+            var searchBuilder = new SearchBuilder();
+            if (model.Title != null) searchBuilder = searchBuilder.WithPartialTitle(model.Title);
+            if (model.YearOfRelease != null) searchBuilder = searchBuilder.Since(model.YearOfRelease.Value);
+            if (model.Genre != null) searchBuilder = searchBuilder.WithGenre(model.Genre);
+            if (model.Genres != null) searchBuilder = searchBuilder.WithGenre(model.Genres);
+
+            var result = movieService.Search(searchBuilder);
+
+            if (!result.Any()) return NotFound();
+
+            return base.Ok(result);
         }
 
     }
