@@ -12,7 +12,7 @@ namespace FWA.Data
     /// * Investigate Entity Framework, Dapper, other ORMs
     /// * Might be worth looking into NoSQL databases, MongoDB could store this data beautifully!
     /// * Select the best for the data that needs to be stored
-    public class DataContext : DataContext
+    public class DataContext : DbContext
     {
 
         public DataContext()
@@ -30,7 +30,10 @@ namespace FWA.Data
             var rand = new Random();
             for(var i = 0; i < rand.Next(10, 20); i++)
             {
-                Users.Add(Guid.NewGuid());
+                Users.Add(new User()
+                {
+                    Id = Guid.NewGuid()
+                });
             }
         }
 
@@ -41,11 +44,13 @@ namespace FWA.Data
 
             foreach (var demoMovie in demoMovieNames)
             {
+
                 Movies.Add(new Movie()
                 {
                     Id = Guid.NewGuid(),
                     Title = demoMovie,
-                    YearOfRelease = rand.Next(1950, 2019),
+                    //No movies are released after the 29th of the month in the country of Testland, where this test is set
+                    Released = new DateTime(rand.Next(1950, 2019), rand.Next(1,12), rand.Next(1, 28)), 
                     RunningTime = rand.Next(85, 240)
                 });
             }
