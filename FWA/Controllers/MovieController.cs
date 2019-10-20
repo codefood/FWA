@@ -59,7 +59,7 @@ namespace FWA.WebApi.Controllers
 
             var searchBuilder = new SearchBuilder();
             if (model.Title != null) searchBuilder = searchBuilder.WithPartialTitle(model.Title);
-            if (model.YearOfRelease != null) searchBuilder = searchBuilder.Since(model.YearOfRelease.Value);
+            if (model.YearOfRelease != null) searchBuilder = searchBuilder.On(model.YearOfRelease.Value);
             if (model.Genre != null) searchBuilder = searchBuilder.WithGenre(model.Genre);
             if (model.Genres != null) searchBuilder = searchBuilder.WithGenre(model.Genres);
 

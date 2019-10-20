@@ -32,9 +32,10 @@ namespace FWA.Data.Repositories
                      AverageRating = x.Average(y => y.Value)
                  })
                  .OrderByDescending(x => x.AverageRating)
+                 //.ThenBy(x => x.Movie.Title)
                  .Take(count)
                  .ToListAsync());
-            //.ThenBy(x => x.Movie.Title)
+            
 
             var list = new List<RatedMovie>();
             foreach(var rating in ratings)
