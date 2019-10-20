@@ -12,5 +12,7 @@ namespace FWA.Data.Repositories.Interfaces
         IEnumerable<Rating> RatingsForMovie(Guid movieId);
         IEnumerable<Rating> RatingsByUser(Guid userId);
 
+        Task<IEnumerable<RatedMovie>> TopByRating(int count, Guid? ratedBy);
+
     }
 }

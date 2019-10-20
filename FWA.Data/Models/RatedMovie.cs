@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FWA.WebApi.Models
+namespace FWA.Data.Models
 {
     public class RatedMovie : Movie
     {

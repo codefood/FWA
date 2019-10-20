@@ -1,4 +1,4 @@
-﻿using FWA.Data.Models;
+﻿using FWA.Data.Models; 
 using FWA.Data.Repositories;
 using FWA.Data.Repositories.Interfaces;
 using System;
@@ -23,12 +23,6 @@ namespace FWA.Data.Services
             return GetAverageRating(movie.Id);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="movieId"></param>
-        /// <returns></returns>
-        /// <remarks>Consider implementing a caching layer here</remarks>
         public decimal GetAverageRating(Guid movieId)
         {
             var ratings = _ratingRepository.RatingsForMovie(movieId);
@@ -36,9 +30,18 @@ namespace FWA.Data.Services
             return Round(rating);
         }
 
+        public async Task<IEnumerable<RatedMovie>> TopFive(Guid? ratedBy)
+        {
+            return (await _ratingRepository.TopByRating(5, ratedBy)).Select(x => 
+            { 
+                x.Rating = Round(x.Rating);
+                return x;
+            });
+        }
+
         public decimal Round(decimal input)
         {
-            return Math.Round(input, MidpointRounding.AwayFromZero);
+            return Math.Round(input * 2, MidpointRounding.AwayFromZero) / 2;
         }
 
 

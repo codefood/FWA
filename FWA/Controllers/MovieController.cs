@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FWA.Data.Models;
 using FWA.Data.Search;
 using FWA.Data.Services;
 using FWA.WebApi.Extensions;
@@ -16,10 +17,12 @@ namespace FWA.WebApi.Controllers
     public class MovieController : ControllerBase
     {
         private readonly MovieService movieService;
+        private readonly RatingService ratingService;
 
-        public MovieController(MovieService movieService)
+        public MovieController(MovieService movieService, RatingService ratingService)
         {
             this.movieService = movieService;
+            this.ratingService = ratingService;
         }
 
         [HttpGet]
@@ -31,17 +34,25 @@ namespace FWA.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("{*title}")]
-        public async Task<IActionResult> Search(string title)
+        [Route("{*input}")]
+        public IActionResult Search(string input)
         {
-            return await Search(new SearchModel()
+            if (string.IsNullOrEmpty(input)) return BadRequest();
+
+            var model = new SearchModel();
+            if(int.TryParse(input, out var year))
             {
-                Title = title
-            });
+                model.YearOfRelease = year;
+            }
+            else
+            {
+                model.Title = input;
+            }
+            return Search(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Search(SearchModel model)
+        public IActionResult Search(SearchModel model)
         {
             if (!model.Valid())
                 return BadRequest();
@@ -52,11 +63,21 @@ namespace FWA.WebApi.Controllers
             if (model.Genre != null) searchBuilder = searchBuilder.WithGenre(model.Genre);
             if (model.Genres != null) searchBuilder = searchBuilder.WithGenre(model.Genres);
 
-            var result = movieService.Search(searchBuilder);
+            var searchRResult = movieService.Search(searchBuilder);
 
-            if (!result.Any()) return NotFound();
+            if (!searchRResult.Any()) return NotFound();
 
-            return Ok(result);
+            var ratedResults = searchRResult.Select(x => new RatedMovie()
+            {
+                Genres = x.Genres,
+                Released = x.Released,
+                RunningTime = x.RunningTime,
+                Id = x.Id,
+                Title = x.Title,
+                Rating = ratingService.GetAverageRating(x)
+            });
+
+            return Ok(ratedResults);
         }
 
     }
