@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FWA.WebApi.Extensions;
+using FWA.WebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,8 +13,11 @@ namespace FWA.WebApi.Controllers
     [ApiController]
     public class MovieController : ControllerBase
     {
-        public async Task<IActionResult> Search()
+        public async Task<IActionResult> Search(SearchModel model)
         {
+            if (!model.Valid())
+                return BadRequest();
+
             return null;
         }
 
